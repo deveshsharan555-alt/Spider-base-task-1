@@ -96,38 +96,10 @@ def main():
     # -----------------------------
     # UI STYLING (ADD HERE)
     # -----------------------------
-    st.markdown("""
-        <style>
-            .main {
-                background-color: #0e1117;
-                color: white;
-            }
+    
 
-            .title {
-                text-align: center;
-                font-size: 40px;
-                font-weight: 700;
-                margin-bottom: 5px;
-            }
-
-            .subtitle {
-                text-align: center;
-                font-size: 16px;
-                color: #a0a0a0;
-                margin-bottom: 30px;
-            }
-
-            .chat-box {
-                background: #1c1f26;
-                padding: 15px;
-                border-radius: 12px;
-                margin-bottom: 10px;
-            }
-        </style>
-    """, unsafe_allow_html=True)
-
-    st.markdown('<div class="title">📄 PDF Chat Assistant</div>', unsafe_allow_html=True)
-    st.markdown('<div class="subtitle">Ask questions from your documents instantly</div>', unsafe_allow_html=True)
+    st.title("📄 PDF Chat Assistant")
+    st.caption("Ask questions from your documents instantly")
 
 
 
@@ -178,24 +150,12 @@ def main():
     if user_question and st.session_state.conversation:
 
         
-        st.markdown(f"""
-        <div style="
-                    text-align:right;
-                    background:#2b313e;
-                    padding:10px;
-                    border-radius:10px;
-                    margin:10px 0;
-        ">
-                    🙋‍♂️ {user_question}
-        </div>
-        """, unsafe_allow_html=True)
+        with st.chat_message("user"):
+            st.write(user_question)
 
         response = st.session_state.conversation.invoke({"question": user_question})
-        st.markdown(f"""
-        <div class="chat-box">
-                    🤖 <b>Answer:</b><br>{response["answer"]}
-        </div>
-        """, unsafe_allow_html=True)
+        with st.chat_message("assistant"):
+            st.write(response["answer"])
 
 
 if __name__ == "__main__":
